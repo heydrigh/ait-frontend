@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import Container from './'
+import Container from '.'
 
 const meta: Meta<typeof Container> = {
 	component: Container,

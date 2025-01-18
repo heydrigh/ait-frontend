@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import Container from './'
+import Container from '.'
 
 jest.mock('../sider', () => ({
 	__esModule: true,
