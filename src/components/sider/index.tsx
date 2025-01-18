@@ -23,7 +23,7 @@ const Sider = ({ navItems }: SiderProps) => {
 		<>
 			<div className='flex flex-col h-screen bg-slate-600 text-white md:hidden'>
 				<div className='flex justify-end items-center h-16 px-4'>
-					<h1 className='hidden md:block text-xl font-bold'>AIT'S DASHBOARD</h1>
+					<h1 className='hidden md:block text-xl font-bold'>AIT&apos;S DASHBOARD</h1>
 					<button onClick={handleToggleSidebar} aria-label='Toggle Menu'>
 						<FaBars className='text-2xl' />
 					</button>
@@ -44,7 +44,7 @@ const Sider = ({ navItems }: SiderProps) => {
 				} transition-transform md:relative md:translate-x-0`}
 			>
 				<div className='flex items-center justify-between h-16 px-4 bg-slate-900 md:justify-center'>
-					<h1 className='text-xl font-bold'>AIT'S DASHBOARD</h1>
+					<h1 className='text-xl font-bold'>AIT&apos;S DASHBOARD</h1>
 					<button
 						onClick={handleCloseSidebar}
 						className='text-2xl md:hidden'

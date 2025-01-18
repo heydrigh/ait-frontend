@@ -16,11 +16,11 @@ const eslintConfig = [
 			'next/core-web-vitals',
 			'next/typescript',
 			'prettier',
-			'eslint:recommended',
 			'plugin:storybook/recommended',
 		],
 		rules: {},
 		plugins: ['jest'],
 	}),
 ]
+
 export default eslintConfig

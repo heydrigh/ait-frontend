@@ -1,7 +1,10 @@
 import { render, screen } from '@testing-library/react'
 import Container from './'
 
-jest.mock('../sider', () => () => <nav data-testid='sider' />)
+jest.mock('../sider', () => ({
+	__esModule: true,
+	default: () => <div data-testid='sider'></div>,
+}))
 
 describe('Container', () => {
 	it('should render the Sider component', () => {
