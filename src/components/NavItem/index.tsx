@@ -6,7 +6,7 @@ const NavItem = ({ href, icon: Icon, label, onClick, active }: NavItemProps) => 
 		<Link
 			href={href}
 			className={`flex items-center px-4 py-2 rounded-md ${
-				active ? 'bg-gray-700 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+				active ? 'bg-slate-700 text-white' : 'text-slate-300 hover:bg-slate-700 hover:text-white'
 			}`}
 			onClick={onClick}
 		>
