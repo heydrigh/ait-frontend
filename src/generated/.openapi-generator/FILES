@@ -1,9 +1,8 @@
-.openapi-generator-ignore
 apis/AITsApi.ts
 apis/index.ts
 index.ts
 models/Ait.ts
-models/AitControllerFindAll200Response.ts
+models/AitPaginationResult.ts
 models/CreateAitDto.ts
 models/UpdateAitDto.ts
 models/index.ts

@@ -1,6 +1,8 @@
 import { Ait } from '@/generated'
 import { formatCurrency } from '@/utils/currency'
 import { ColumnDef } from '@tanstack/react-table'
+import { TableAction } from './types'
+import { FaEye, FaEdit, FaTrash } from 'react-icons/fa'
 
 export const generateMockAits = (count: number = 10): Ait[] => {
 	const mockAits: Ait[] = []
@@ -24,7 +26,7 @@ export const mockColumns: ColumnDef<Ait>[] = [
 	{
 		accessorKey: 'dataInfracao',
 		header: 'Infraction Date',
-		cell: (info) => info.getValue<Date>().toLocaleString(),
+		cell: (info) => new Date(info.getValue<Date>()).toLocaleString(),
 	},
 	{
 		accessorKey: 'descricao',
@@ -34,5 +36,23 @@ export const mockColumns: ColumnDef<Ait>[] = [
 		accessorKey: 'valorMulta',
 		header: 'Fine Amount',
 		cell: (info) => formatCurrency(info.getValue<number>()),
+	},
+]
+
+export const mockActions: TableAction<Ait>[] = [
+	{
+		label: 'View',
+		icon: FaEye,
+		onClick: (ait) => alert(`Viewing ${ait.placaVeiculo}`),
+	},
+	{
+		label: 'Edit',
+		icon: FaEdit,
+		onClick: (ait) => alert(`Editing ${ait.placaVeiculo}`),
+	},
+	{
+		label: 'Delete',
+		icon: FaTrash,
+		onClick: (ait) => alert(`Deleting ${ait.placaVeiculo}`),
 	},
 ]

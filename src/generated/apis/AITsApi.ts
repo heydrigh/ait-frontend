@@ -16,15 +16,15 @@
 import * as runtime from '../runtime';
 import type {
   Ait,
-  AitControllerFindAll200Response,
+  AitPaginationResult,
   CreateAitDto,
   UpdateAitDto,
 } from '../models/index';
 import {
     AitFromJSON,
     AitToJSON,
-    AitControllerFindAll200ResponseFromJSON,
-    AitControllerFindAll200ResponseToJSON,
+    AitPaginationResultFromJSON,
+    AitPaginationResultToJSON,
     CreateAitDtoFromJSON,
     CreateAitDtoToJSON,
     UpdateAitDtoFromJSON,
@@ -97,7 +97,7 @@ export class AITsApi extends runtime.BaseAPI {
     /**
      * Retrieve all AITs with pagination
      */
-    async aitControllerFindAllRaw(requestParameters: AitControllerFindAllRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AitControllerFindAll200Response>> {
+    async aitControllerFindAllRaw(requestParameters: AitControllerFindAllRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AitPaginationResult>> {
         const queryParameters: any = {};
 
         if (requestParameters['page'] != null) {
@@ -117,13 +117,13 @@ export class AITsApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => AitControllerFindAll200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => AitPaginationResultFromJSON(jsonValue));
     }
 
     /**
      * Retrieve all AITs with pagination
      */
-    async aitControllerFindAll(requestParameters: AitControllerFindAllRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AitControllerFindAll200Response> {
+    async aitControllerFindAll(requestParameters: AitControllerFindAllRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AitPaginationResult> {
         const response = await this.aitControllerFindAllRaw(requestParameters, initOverrides);
         return await response.value();
     }

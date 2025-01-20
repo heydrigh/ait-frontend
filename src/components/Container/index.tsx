@@ -1,3 +1,4 @@
+'use client'
 import { PropsWithChildren } from 'react'
 import { navItems } from './constants'
 import Sider from '../sider'

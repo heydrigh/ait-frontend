@@ -1,10 +1,11 @@
-import { Ait } from '@/generated'
-import { ColumnDef } from '@tanstack/react-table'
+export interface TableAction<T> {
+	icon: React.ComponentType<{ size?: number }>
+	onClick: (item: T) => void
+	label: string
+}
 
-export interface TableProps {
-	data: Ait[]
-	columns: ColumnDef<Ait>[]
-	onView: (id: string) => void
-	onEdit: (id: string) => void
-	onDelete: (id: string) => void
+export interface TableProps<T> {
+	data: T[]
+	columns: ColumnDef<T>[]
+	actions?: TableAction<T>[]
 }

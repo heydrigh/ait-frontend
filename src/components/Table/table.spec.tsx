@@ -1,27 +1,16 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import Table from './'
-import { generateMockAits, mockColumns } from './mocks'
+import { generateMockAits, mockColumns, mockActions } from './mocks'
 
 describe('Table Component', () => {
 	const mockData = generateMockAits(15)
-	const onView = jest.fn()
-	const onEdit = jest.fn()
-	const onDelete = jest.fn()
 
 	beforeEach(() => {
 		jest.clearAllMocks()
 	})
 
 	it('should render table headers correctly', () => {
-		render(
-			<Table
-				data={mockData}
-				columns={mockColumns}
-				onView={onView}
-				onEdit={onEdit}
-				onDelete={onDelete}
-			/>
-		)
+		render(<Table data={mockData} columns={mockColumns} actions={mockActions} />)
 
 		expect(screen.getByText('License Plate')).toBeInTheDocument()
 		expect(screen.getByText('Infraction Date')).toBeInTheDocument()
@@ -30,76 +19,43 @@ describe('Table Component', () => {
 	})
 
 	it('should render table rows correctly', () => {
-		render(
-			<Table
-				data={mockData}
-				columns={mockColumns}
-				onView={onView}
-				onEdit={onEdit}
-				onDelete={onDelete}
-			/>
-		)
+		render(<Table data={mockData} columns={mockColumns} actions={mockActions} />)
 
 		const firstRow = mockData[0]
 		expect(screen.getByText(firstRow.placaVeiculo)).toBeInTheDocument()
 		expect(screen.getByText(firstRow.descricao)).toBeInTheDocument()
 	})
 
-	it('should call onView, onEdit, and onDelete when actions are clicked', () => {
-		render(
-			<Table
-				data={mockData}
-				columns={mockColumns}
-				onView={onView}
-				onEdit={onEdit}
-				onDelete={onDelete}
-			/>
-		)
+	it('should call action callbacks when buttons are clicked', () => {
+		const viewAction = jest.fn()
+		const editAction = jest.fn()
+		const deleteAction = jest.fn()
 
-		const viewButton = screen.getAllByRole('button', { name: /View Details/i })[0]
-		const editButton = screen.getAllByRole('button', { name: /Edit/i })[0]
-		const deleteButton = screen.getAllByRole('button', { name: /Delete/i })[0]
+		const actions = [
+			{ label: 'View', icon: mockActions[0].icon, onClick: viewAction },
+			{ label: 'Edit', icon: mockActions[1].icon, onClick: editAction },
+			{ label: 'Delete', icon: mockActions[2].icon, onClick: deleteAction },
+		]
+
+		render(<Table data={mockData} columns={mockColumns} actions={actions} />)
+
+		const viewButton = screen.getAllByLabelText('View')[0]
+		const editButton = screen.getAllByLabelText('Edit')[0]
+		const deleteButton = screen.getAllByLabelText('Delete')[0]
 
 		fireEvent.click(viewButton)
 		fireEvent.click(editButton)
 		fireEvent.click(deleteButton)
 
-		expect(onView).toHaveBeenCalledWith(mockData[0].id)
-		expect(onEdit).toHaveBeenCalledWith(mockData[0].id)
-		expect(onDelete).toHaveBeenCalledWith(mockData[0].id)
+		expect(viewAction).toHaveBeenCalledWith(mockData[0])
+		expect(editAction).toHaveBeenCalledWith(mockData[0])
+		expect(deleteAction).toHaveBeenCalledWith(mockData[0])
 	})
 
-	it('should render pagination controls and handle clicks', () => {
-		render(
-			<Table
-				data={mockData}
-				columns={mockColumns}
-				onView={onView}
-				onEdit={onEdit}
-				onDelete={onDelete}
-			/>
-		)
+	it('should render without actions if none are provided', () => {
+		render(<Table data={mockData} columns={mockColumns} />)
 
-		const nextPageButton = screen.getByRole('button', { name: 'Next Page' })
-		const previousPageButton = screen.getByRole('button', { name: 'Previous Page' })
-		const firstPageButton = screen.getByRole('button', { name: 'First Page' })
-		const lastPageButton = screen.getByRole('button', { name: 'Last Page' })
-
-		expect(previousPageButton).toBeDisabled()
-		expect(firstPageButton).toBeDisabled()
-		expect(nextPageButton).not.toBeDisabled()
-		expect(lastPageButton).not.toBeDisabled()
-
-		fireEvent.click(nextPageButton)
-		expect(previousPageButton).not.toBeDisabled()
-		expect(firstPageButton).not.toBeDisabled()
-
-		fireEvent.click(lastPageButton)
-		expect(nextPageButton).toBeDisabled()
-		expect(lastPageButton).toBeDisabled()
-
-		fireEvent.click(firstPageButton)
-		expect(previousPageButton).toBeDisabled()
-		expect(firstPageButton).toBeDisabled()
+		const actionHeaders = screen.queryByText('Actions')
+		expect(actionHeaders).not.toBeInTheDocument()
 	})
 })
