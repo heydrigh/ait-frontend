@@ -11,6 +11,7 @@ import { FaEye, FaEdit, FaTrash } from 'react-icons/fa'
 import Pagination from '@/components/Pagination'
 import { useGetAits } from '@/hooks/useGetAits'
 import Loader from '@/components/Loader'
+import { formatToBrazilianDateTime } from '@/utils/dates'
 
 export default function Home() {
 	const [currentPage, setCurrentPage] = useState(1)
@@ -25,7 +26,7 @@ export default function Home() {
 		{
 			accessorKey: 'dataInfracao',
 			header: 'Data da infração',
-			cell: ({ getValue }) => new Date(getValue<string>()).toLocaleString(),
+			cell: ({ getValue }) => formatToBrazilianDateTime(getValue<string>()),
 		},
 		{
 			accessorKey: 'descricao',
