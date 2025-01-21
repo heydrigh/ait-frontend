@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon'
 import { z } from 'zod'
 
 export const aitSchema = z.object({
@@ -5,9 +6,13 @@ export const aitSchema = z.object({
 		.string()
 		.min(7, 'Placa deve ter 7 caracteres')
 		.max(8, 'Placa deve ter no máximo 8 caracteres'),
-	dataInfracao: z
-		.string()
-		.refine((value) => !isNaN(Date.parse(value)), { message: 'Data inválida' }),
+	dataInfracao: z.string().refine(
+		(value) => {
+			const date = DateTime.fromFormat(value, 'dd/MM/yyyy HH:mm')
+			return date.isValid && date <= DateTime.now()
+		},
+		{ message: 'Data inválida ou no futuro' }
+	),
 	descricao: z.string().min(10, 'Descrição deve ter pelo menos 10 caracteres'),
 	valorMulta: z
 		.string()

@@ -11,13 +11,14 @@ import { FaEye, FaEdit, FaTrash } from 'react-icons/fa'
 import Pagination from '@/components/Pagination'
 import { useGetAits } from '@/hooks/useGetAits'
 import Loader from '@/components/Loader'
-import { formatToBrazilianDateTime } from '@/utils/dates'
+import { fromJSDateToBrazilianString } from '@/utils/dates'
 import { useDeleteAit } from '@/hooks/useDeleteAit'
 import { toast } from 'react-toastify'
 import Dialog from '@/components/Dialog'
 import { useQueryClient } from '@tanstack/react-query'
 import { AITS_QUERY_KEY } from '@/utils/constants'
 import { useRouter } from 'next/navigation'
+import { useProcessAits } from '@/hooks/useProcessAit'
 
 export default function Home() {
 	const router = useRouter()
@@ -25,7 +26,9 @@ export default function Home() {
 	const [currentPage, setCurrentPage] = useState(1)
 	const [selectedDelete, setSelectedDelete] = useState<Ait | null>(null)
 	const itemsPerPage = 10
+
 	const { data, isLoading } = useGetAits({ page: currentPage, limit: itemsPerPage })
+
 	const { mutate: deleteAit } = useDeleteAit({
 		onSuccess: () => {
 			toast.success('AIT deletado com  sucesso!')
@@ -38,6 +41,15 @@ export default function Home() {
 		},
 	})
 
+	const { mutate: processAit, isPending: isProcessingAit } = useProcessAits({
+		onSuccess: () => {
+			toast.success(`AIT's processados e enviados a fila`)
+		},
+		onError: () => {
+			toast.error(`Falha ao processas AIT's`)
+		},
+	})
+
 	const columns: ColumnDef<Ait>[] = [
 		{
 			accessorKey: 'placaVeiculo',
@@ -46,7 +58,7 @@ export default function Home() {
 		{
 			accessorKey: 'dataInfracao',
 			header: 'Data da infração',
-			cell: ({ getValue }) => formatToBrazilianDateTime(getValue<Date>()),
+			cell: ({ getValue }) => fromJSDateToBrazilianString(getValue<Date>()),
 		},
 		{
 			accessorKey: 'descricao',
@@ -66,6 +78,10 @@ export default function Home() {
 	const handleOnClickView = (ait: Ait) => {
 		router.push(`/ait/details/${ait.id}`)
 	}
+
+	const handleOnClickEdit = (ait: Ait) => {
+		router.push(`/ait/edit/${ait.id}`)
+	}
 	const actions: TableAction<Ait>[] = [
 		{
 			label: 'View',
@@ -75,7 +91,7 @@ export default function Home() {
 		{
 			label: 'Edit',
 			icon: FaEdit,
-			onClick: (ait) => alert(`Editing AIT ${ait.id}`),
+			onClick: handleOnClickEdit,
 		},
 		{
 			label: 'Delete',
@@ -100,7 +116,9 @@ export default function Home() {
 		<main className='flex pt-4 w-full flex-col'>
 			<div className='flex justify-between items-center mb-4'>
 				<h1 className='text-2xl font-bold'>Listagem de AIT&apos;s</h1>
-				<Button onClick={() => alert('Processing AITs...')}>Processar AIT&apos;s</Button>
+				<Button loading={isProcessingAit} onClick={() => processAit()}>
+					Processar AIT&apos;s
+				</Button>
 			</div>
 			{data?.data && (
 				<>

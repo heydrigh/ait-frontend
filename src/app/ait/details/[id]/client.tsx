@@ -1,7 +1,7 @@
 'use client'
 import { AitDetailsClientProps } from './types'
 import { formatCurrency } from '@/utils/currency'
-import { formatToBrazilianDateTime } from '@/utils/dates'
+import { fromJSDateToBrazilianString } from '@/utils/dates'
 
 export default function AitDetailsClient({ ait }: AitDetailsClientProps) {
 	return (
@@ -15,7 +15,7 @@ export default function AitDetailsClient({ ait }: AitDetailsClientProps) {
 				<div>
 					<h2 className='text-sm font-medium text-gray-500'>Data da Infração</h2>
 					<p className='text-lg font-semibold text-gray-800'>
-						{formatToBrazilianDateTime(ait.dataInfracao)}
+						{fromJSDateToBrazilianString(ait.dataInfracao)}
 					</p>
 				</div>
 				<div className='sm:col-span-2'>
