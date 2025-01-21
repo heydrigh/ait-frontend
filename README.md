@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Frontend for AIT Management System
+
+## Description
+
+This project serves as the frontend for the AIT (Auto de Infração de Trânsito) Management System. It is built with **Next.js**, styled with **Tailwind CSS**, and uses **React Query** for data fetching and caching.
+
+## Prerequisites
+
+Ensure you have the following installed on your system:
+
+- Node.js (>= 16.x)
+- Yarn (Package Manager)
+- Docker and Docker Compose (to run the backend services)
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+   git clone <https://github.com/heydrigh/ait-frontend>
+   cd <frontend-folder>
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+    yarn install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Start the development server:
 
-## Learn More
+```bash
+   yarn dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+   The frontend will run at `http://localhost:3000`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. Ensure the backend is running simultaneously for full functionality. Follow the instructions in the backend repository to set it up and run it.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Testing
 
-## Deploy on Vercel
+Run the test suite using the following command:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+yarn test
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This will execute all unit and integration tests.
+
+## Documentation
+
+To view the component documentation and design system, run:
+
+```bash
+yarn storybook
+```
+
+Once started, the Storybook UI will be available at `http://localhost:6006`.
+
+## Environment Variables
+
+Create a `.env.local` file in the project root with the necessary environment variables:
+
+```plaintext
+NEXT_PUBLIC_API_URL=http://localhost:3333/api
+```
+
+Adjust the `NEXT_PUBLIC_API_URL` value to point to the backend API.
+
+## Deployment
+
+To build the project for production, run:
+
+```bash
+yarn build
+```
+
+Then start the production server with:
+
+```bash
+yarn start
+```
+
+The application will now be running in production mode.
+
+## Additional Notes
+
+- Ensure the backend RabbitMQ and PostgreSQL services are running via Docker Compose for complete functionality.
+- For endpoint details, refer to the backend Swagger documentation.
+
+## Feedback
+
+If you encounter any issues or have suggestions for improvement, feel free to raise them in the repository's issue tracker.
