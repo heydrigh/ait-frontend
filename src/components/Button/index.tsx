@@ -10,7 +10,7 @@ const Button = ({ variant = 'primary', children, loading, disabled, ...rest }: B
 
 	return (
 		<button
-			className={`px-4 py-2 rounded-md font-medium transition-all duration-150 focus:outline-none disabled:cursor-not-allowed
+			className={`px-4 h-8 py-2 rounded-md font-medium transition-all duration-150 focus:outline-none disabled:cursor-not-allowed
         ${buttonVariantClasses[variant]}`}
 			disabled={loading || disabled}
 			{...rest}
