@@ -4,3 +4,8 @@ export const formatCurrency = (value: number, locale = 'pt-BR', currency = 'BRL'
 		currency,
 	}).format(value)
 }
+
+export const parseBrazilianCurrency = (value: string): number => {
+	const numericValue = value.replace(/[^\d,]/g, '').replace(',', '.')
+	return parseFloat(numericValue)
+}

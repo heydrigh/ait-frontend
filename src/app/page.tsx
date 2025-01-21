@@ -12,11 +12,31 @@ import Pagination from '@/components/Pagination'
 import { useGetAits } from '@/hooks/useGetAits'
 import Loader from '@/components/Loader'
 import { formatToBrazilianDateTime } from '@/utils/dates'
+import { useDeleteAit } from '@/hooks/useDeleteAit'
+import { toast } from 'react-toastify'
+import Dialog from '@/components/Dialog'
+import { useQueryClient } from '@tanstack/react-query'
+import { AITS_QUERY_KEY } from '@/utils/constants'
+import { useRouter } from 'next/navigation'
 
 export default function Home() {
+	const router = useRouter()
+	const queryClient = useQueryClient()
 	const [currentPage, setCurrentPage] = useState(1)
+	const [selectedDelete, setSelectedDelete] = useState<Ait | null>(null)
 	const itemsPerPage = 10
 	const { data, isLoading } = useGetAits({ page: currentPage, limit: itemsPerPage })
+	const { mutate: deleteAit } = useDeleteAit({
+		onSuccess: () => {
+			toast.success('AIT deletado com  sucesso!')
+			setSelectedDelete(null)
+			queryClient.invalidateQueries({ queryKey: [AITS_QUERY_KEY] })
+		},
+		onError: () => {
+			toast.error(`Falha ao delatar AIT`)
+			setSelectedDelete(null)
+		},
+	})
 
 	const columns: ColumnDef<Ait>[] = [
 		{
@@ -26,7 +46,7 @@ export default function Home() {
 		{
 			accessorKey: 'dataInfracao',
 			header: 'Data da infração',
-			cell: ({ getValue }) => formatToBrazilianDateTime(getValue<string>()),
+			cell: ({ getValue }) => formatToBrazilianDateTime(getValue<Date>()),
 		},
 		{
 			accessorKey: 'descricao',
@@ -39,11 +59,18 @@ export default function Home() {
 		},
 	]
 
+	const handleOnClickDelete = (ait: Ait) => {
+		setSelectedDelete(ait)
+	}
+
+	const handleOnClickView = (ait: Ait) => {
+		router.push(`/ait/details/${ait.id}`)
+	}
 	const actions: TableAction<Ait>[] = [
 		{
 			label: 'View',
 			icon: FaEye,
-			onClick: (ait) => alert(`Viewing AIT ${ait.id}`),
+			onClick: handleOnClickView,
 		},
 		{
 			label: 'Edit',
@@ -53,17 +80,18 @@ export default function Home() {
 		{
 			label: 'Delete',
 			icon: FaTrash,
-			onClick: (ait) => {
-				const confirm = window.confirm(`Are you sure you want to delete AIT ${ait.id}?`)
-				if (confirm) {
-					alert(`Deleted AIT ${ait.id}`)
-				}
-			},
+			onClick: handleOnClickDelete,
 		},
 	]
 
 	const handlePageChange = (page: number) => {
 		setCurrentPage(page)
+	}
+
+	const handleConfirmDelete = () => {
+		if (selectedDelete) {
+			deleteAit({ id: selectedDelete.id })
+		}
 	}
 
 	if (isLoading) return <Loader />
@@ -86,6 +114,15 @@ export default function Home() {
 					</div>
 				</>
 			)}
+
+			<Dialog
+				isOpen={!!selectedDelete}
+				title='Confirmar deleção'
+				onConfirm={handleConfirmDelete}
+				onCancel={() => setSelectedDelete(null)}
+			>
+				{`Tem certeza que quer deletar AIT da placa: ${selectedDelete?.placaVeiculo}?`}
+			</Dialog>
 		</main>
 	)
 }

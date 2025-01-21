@@ -3485,6 +3485,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/query-devtools@npm:5.64.2":
+  version: 5.64.2
+  resolution: "@tanstack/query-devtools@npm:5.64.2"
+  checksum: 10c0/6ed57ad727be66c79ce82149cee1ad94255af2e2e29a0985c42f5bd589a206c8dcdc7a9c8611496a55e6463bd047c55fe0cf1f59455cb2735aee1090ce37ae0b
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query-devtools@npm:^5.64.2":
+  version: 5.64.2
+  resolution: "@tanstack/react-query-devtools@npm:5.64.2"
+  dependencies:
+    "@tanstack/query-devtools": "npm:5.64.2"
+  peerDependencies:
+    "@tanstack/react-query": ^5.64.2
+    react: ^18 || ^19
+  checksum: 10c0/d4dfeb2f3b91848c724668c1226a69dfec311ccaa830d4dea8b5de2c2e42d762b5c1d03f44dff8d95651d0ec203dd98535b330725b2e38d0ae6f41f4f5d9c1b4
+  languageName: node
+  linkType: hard
+
 "@tanstack/react-query@npm:^5.62.7":
   version: 5.64.1
   resolution: "@tanstack/react-query@npm:5.64.1"
@@ -3842,6 +3861,13 @@ __metadata:
   version: 0.0.29
   resolution: "@types/json5@npm:0.0.29"
   checksum: 10c0/6bf5337bc447b706bb5b4431d37686aa2ea6d07cfd6f79cc31de80170d6ff9b1c7384a9c0ccbc45b3f512bae9e9f75c2e12109806a15331dc94e8a8db6dbb4ac
+  languageName: node
+  linkType: hard
+
+"@types/luxon@npm:^3":
+  version: 3.4.2
+  resolution: "@types/luxon@npm:3.4.2"
+  checksum: 10c0/d835467de3daf7e17ba78b50bb5a14efd94272439ca067990d71332a54b311544459c69623eddd243b511b28d70194c9591a9ee8cf9c038962c965f991affd7e
   languageName: node
   linkType: hard
 
@@ -4410,11 +4436,13 @@ __metadata:
     "@storybook/react": "npm:8.6.0-alpha.0"
     "@storybook/test": "npm:8.6.0-alpha.0"
     "@tanstack/react-query": "npm:^5.62.7"
+    "@tanstack/react-query-devtools": "npm:^5.64.2"
     "@tanstack/react-table": "npm:^8.20.6"
     "@testing-library/dom": "npm:^10.4.0"
     "@testing-library/jest-dom": "npm:^6.6.3"
     "@testing-library/react": "npm:^16.1.0"
     "@types/jest": "npm:^29.5.14"
+    "@types/luxon": "npm:^3"
     "@types/node": "npm:^20"
     "@types/react": "npm:^19"
     "@types/react-dom": "npm:^19"
@@ -4427,7 +4455,7 @@ __metadata:
     husky: "npm:^9.1.7"
     jest: "npm:^29.7.0"
     jest-environment-jsdom: "npm:^29.7.0"
-    moment: "npm:^2.30.1"
+    luxon: "npm:^3.5.0"
     next: "npm:15.1.5"
     next-router-mock: "npm:^0.9.13"
     postcss: "npm:^8"
@@ -9899,6 +9927,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"luxon@npm:^3.5.0":
+  version: 3.5.0
+  resolution: "luxon@npm:3.5.0"
+  checksum: 10c0/335789bba95077db831ef99894edadeb23023b3eb2137a1b56acd0d290082b691cf793143d69e30bc069ec95f0b49f36419f48e951c68014f19ffe12045e3494
+  languageName: node
+  linkType: hard
+
 "lz-string@npm:^1.5.0":
   version: 1.5.0
   resolution: "lz-string@npm:1.5.0"
@@ -10233,13 +10268,6 @@ __metadata:
   bin:
     mkdirp: dist/cjs/src/bin.js
   checksum: 10c0/9f2b975e9246351f5e3a40dcfac99fcd0baa31fbfab615fe059fb11e51f10e4803c63de1f384c54d656e4db31d000e4767e9ef076a22e12a641357602e31d57d
-  languageName: node
-  linkType: hard
-
-"moment@npm:^2.30.1":
-  version: 2.30.1
-  resolution: "moment@npm:2.30.1"
-  checksum: 10c0/865e4279418c6de666fca7786607705fd0189d8a7b7624e2e56be99290ac846f90878a6f602e34b4e0455c549b85385b1baf9966845962b313699e7cb847543a
   languageName: node
   linkType: hard
 
